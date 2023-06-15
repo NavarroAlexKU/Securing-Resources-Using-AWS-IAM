@@ -104,3 +104,50 @@ The role allows the following:
 ```
 
 ## Attach Polices to Roles:
+* Find the "UserReadOnlyRole"
+* On the permissions tab, choose "Add Permissions" then attach the policy "ReadOnlyPolicy: 
+
+![Alt text](image-4.png)
+
+* Repeat the same steps but this time attach the "CRUDPolicy" to the UserCRUDRole
+
+![Alt text](image-5.png)
+
+## UPDATE TRUST RELATIONSHIPS FOR ROLES:
+A trust relationship defines what entities are allowed to assume the roles. I will update the trust relationships for both the UserReadOnlyRole and UserCRUDRole roles, limiting access to a single user.
+
+* Go to Roles
+* Edit trust policy
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::<AccountId>:user/IAMUser1-J2bkzZ"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+```
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::<AccountId>:user/IAMUser1-J2bkzZ"
+            },
+            "Action": "sts:AssumeRole"
+        }
+    ]
+}
+```
+
+## Assuming Roles:
+
+
