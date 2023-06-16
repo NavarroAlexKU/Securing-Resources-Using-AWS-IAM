@@ -174,3 +174,45 @@ If I repeat the process above, for the UserCRUDRole we can see that I also can e
 Next, I'll demonstrate how to revoke access to a role using conditional statements in policies.
 
 * The goal of this step is to demonstrate how to revoke session access for an assumed role. This action is useful when you are concerned that credentials have been compromised.
+
+If I login with the adminstrator account then do the following:
+* Go to IAM
+* Choose Roles
+* Choose the UserCRUDRole
+* Go to Revoke Sessions Tab
+
+Revoke All Active Sessions Information:
+* If you choose Revoke active sessions, IAM attaches an inline policy named AWSRevokeOlderSessions to this role. This policy denies access to all currently active sessions for this role.
+The new inline policy is the following:
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Deny",
+            "Action": [
+                "*"
+            ],
+            "Resource": [
+                "*"
+            ],
+            "Condition": {
+                "DateLessThan": {
+                    "aws:TokenIssueTime": "[policy creation time]"
+                }
+            }
+        }
+    ]
+}
+```
+Notice that there is a conditional statement called "DateLessThan" which is going to revoke the permissions this role has if the aws:TokenIssueTime is less then the time that the policy creation happened.
+
+* Choose the Revoke Active Sessions button:
+This will revoke all active sessions for the IAMUser1 account.
+IAM immediately attaches a policy named AWSRevokeOlderSessions to the role. The policy denies all access to entities who assumed the role before the moment I choose revoke active sessions.
+
+![Alt text](image-9.png)
+
+Now if I look at my other tab that I have open which is mean signed in as User1 and assume the CRUDAccess role we can see that the EC2 instances are no longer available for me to see because I revoked accessed:
+
+![Alt text](image-10.png)
