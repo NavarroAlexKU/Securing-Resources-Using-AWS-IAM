@@ -171,4 +171,6 @@ If I repeat the process above, for the UserCRUDRole we can see that I also can e
 ![Alt text](image-8.png)
 
 ## How to revoke access:
-Next, I'll deomonstrate how to revoke access to a role using conditional statements in policies.
+Next, I'll demonstrate how to revoke access to a role using conditional statements in policies.
+
+* The goal of this step is to demonstrate how to revoke session access for an assumed role. This action is useful when you are concerned that credentials have been compromised.
