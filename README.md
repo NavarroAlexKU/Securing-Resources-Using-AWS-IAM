@@ -149,5 +149,26 @@ A trust relationship defines what entities are allowed to assume the roles. I wi
 ```
 
 ## Assuming Roles:
+When an IAM user logs into their account, they are granted permissions based on the policies directly attached to their account or if they're part of a group, they will have the policies that are applied to that group and then implemented onto their account. To increase security, the user can request short-term credentials that grant the user elevated permissions.
 
+Right now I logged in as a different user and went to EC2. We can see that the user does not have access to view any of the running EC2 Instances.
+![Alt text](image-6.png)
 
+## Switch to ReadOnlyAccess Role:
+I will demonstrate how the user will have temporary credentials that allow read-only access to the specified services that I wrote in my policy above.
+
+* Go to Switch Role on top right
+* Enter Account ID
+* Enter Password
+* Display Name = ReadOnlyAccess
+* Click Switch Role button
+
+Now if I look at my EC2 instances, we can see that my role at the top right says "ReadOnlyAccess" and that I can now see the "Production web server" instance because my assumed role allows the 'ec2:Describe*' permission stated in my policy above.
+![Alt text](image-7.png)
+
+If I repeat the process above, for the UserCRUDRole we can see that I also can elevate the permssions to have the ec2:Describe permission showing.
+
+![Alt text](image-8.png)
+
+## How to revoke access:
+Next, I'll deomonstrate how to revoke access to a role using conditional statements in policies.
